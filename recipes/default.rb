@@ -5,13 +5,13 @@
 
 if ['util', 'solo'].include?(node[:instance_role])
   # customize here
-  COUCHDB_VERSION = "0.9.0"
+  COUCHDB_VERSION = "0.9.1"
   COUCHDB_PORT    = '5984'
   COUCHDB_SERVER  = '_'
   
   package "dev-db/couchdb" do
     version COUCHDB_VERSION
-    action :install
+    action :upgrade
   end
   
   directory "/data/couchdb" do
@@ -28,7 +28,7 @@ if ['util', 'solo'].include?(node[:instance_role])
     mode 0644
     source "couchdb_local.ini.erb"
     variables({
-      :version => install_version,
+      :version => COUCHDB_VERSION,
       :database_dir => '/data/couchdb',
       :view_index_dir => '/data/couchdb',
       :log_file => '/data/couchdb/couch.log',
