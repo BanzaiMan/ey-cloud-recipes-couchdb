@@ -49,6 +49,13 @@ if ['util', 'solo'].include?(node[:instance_role])
     })
   end
   
+  directory '/etc/nginx/servers' do
+    owner 'root'
+    group 'root'
+    mode 0644
+    action :create
+  end
+  
   template '/etc/nginx/servers/couchdb.conf' do
     owner 'root'
     group 'root'
@@ -58,6 +65,10 @@ if ['util', 'solo'].include?(node[:instance_role])
       :port => COUCHDB_PORT,
       :server_name => COUCHDB_SERVER,
     })
+  end
+  
+  execute "reload monit" do
+    command "monit reload"
   end
   
 end
