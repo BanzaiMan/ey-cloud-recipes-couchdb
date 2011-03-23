@@ -31,7 +31,7 @@ if ['util', 'solo'].include?(node[:instance_role])
       :version => install_version,
       :database_dir => '/data/couchdb',
       :view_index_dir => '/data/couchdb',
-      :log_file => '/data/couchdb/couch.log'
+      :log_file => '/data/couchdb/couch.log',
       # :pidfile => '/var/run/couchdb/couchdb.pid',
       :port  => COUCHDB_PORT,
       :loglevel => 'notice',
