@@ -16,10 +16,6 @@ server {
 
   include /etc/nginx/common/servers.conf;
 
-  include /etc/nginx/servers/couchdb.rewrites;
-  include /etc/nginx/servers/couchdb/custom.locations.conf;
-
-
   location / {
 
     include /etc/nginx/common/proxy.conf;
