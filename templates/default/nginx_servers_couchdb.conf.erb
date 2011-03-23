@@ -1,0 +1,36 @@
+upstream couchdb_futon_upstream {
+  server 127.0.0.1:<%= @port %>;
+}
+
+server {
+  listen 81;
+
+  server_name <%= @server_name %>;
+
+
+  root /data/couchdb/current/public;
+
+  access_log /var/log/engineyard/nginx/couchdb.access.log main;
+
+  error_log /var/log/engineyard/nginx/couchdb.error.log notice;
+
+  include /etc/nginx/common/servers.conf;
+
+  include /etc/nginx/servers/couchdb.rewrites;
+  include /etc/nginx/servers/couchdb/custom.locations.conf;
+
+
+  location / {
+
+    include /etc/nginx/common/proxy.conf;
+
+    if (!-f $request_filename) {
+      proxy_pass http://baremetal_upstream;
+      break;
+    }
+  }
+  
+  location = /500.html {
+    root /data/baremetal/current/public;
+  }
+}
